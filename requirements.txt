@@ -1,0 +1,5 @@
+langchain
+langchain-community
+python-dotenv
+langchain-core
+langchain-upstage
