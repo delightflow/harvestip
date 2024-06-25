@@ -7,7 +7,7 @@ import base64
 import uuid
 import tempfile
 from langchain_upstage import UpstageEmbeddings
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import Chroma
 from langchain_community.document_loaders import PyPDFLoader
 
 if "id" not in st.session_state:
