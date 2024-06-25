@@ -8,4 +8,4 @@ pypdf
 langchain-chroma
 python-dotenv
 streamlit
-chroma                                                        
+chromadb                                                        
