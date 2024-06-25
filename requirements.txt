@@ -3,3 +3,10 @@ langchain-community
 python-dotenv
 langchain-core
 langchain-upstage
+openai
+pypdf
+chromadb
+langchain-chroma
+python-dotenv
+streamlit
+
