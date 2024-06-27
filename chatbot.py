@@ -187,7 +187,7 @@ if prompt := st.chat_input("선행문헌을 등록하고 아이디어를 입력�
         try:
             result = rag_chain.invoke({"input": prompt, "chat_history": st.session_state.messages})
         except Exception as e:
-            st.error(f"선행문헌을 등록해주세요: {e}")
+            st.error(f"선행문헌을 등록해주세요!")
             st.stop()
 
         # result = rag_chain.invoke({"input": prompt, "chat_history": st.session_state.messages})
