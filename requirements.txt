@@ -9,6 +9,6 @@ langchain-chroma
 python-dotenv
 streamlit==1.24.1
 chromadb                  
-protobuf~=3.19.0
+protobuf~=3.20.0
 
 
