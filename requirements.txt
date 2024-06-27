@@ -8,4 +8,6 @@ pypdf
 langchain-chroma
 python-dotenv
 streamlit
-chromadb                                                        
+chromadb                  
+protobuf~=3.19.0
+
