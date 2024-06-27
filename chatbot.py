@@ -162,7 +162,7 @@ for message in st.session_state.messages:
 MAX_MESSAGES_BEFORE_DELETION = 4
 
 # 웹사이트에서 유저의 인풋을 받고 위에서 만든 AI 에이전트 실행시켜서 답변 받기
-if prompt := st.chat_input("발명에 대해서 물어보세요!"):
+if prompt := st.chat_input("Ask me anything!"):
     
 # 유저가 보낸 질문이면 유저 아이콘과 질문 보여주기
      # 만약 현재 저장된 대화 내용 기록이 4개보다 많으면 자르기
