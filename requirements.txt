@@ -7,7 +7,7 @@ openai
 pypdf
 langchain-chroma
 python-dotenv
-streamlit
+streamlit==1.24.1
 chromadb                  
 protobuf~=3.19.0
 sqlite3 >= 3.35.0
