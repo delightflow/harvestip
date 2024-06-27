@@ -183,8 +183,14 @@ if prompt := st.chat_input("선행문헌을 등록하고 아이디어를 입력�
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         full_response = ""
+        
+        try:
+            result = rag_chain.invoke({"input": prompt, "chat_history": st.session_state.messages})
+        except Exception as e:
+            st.error(f"선행문헌을 등록해주세요: {e}")
+            st.stop()
 
-        result = rag_chain.invoke({"input": prompt, "chat_history": st.session_state.messages})
+        # result = rag_chain.invoke({"input": prompt, "chat_history": st.session_state.messages})
 
         # 증거자료 보여주기
         with st.expander("Evidence context"):
