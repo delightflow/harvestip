@@ -1,6 +1,6 @@
 import os
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 import streamlit as st
 import time
 import base64
@@ -25,7 +25,7 @@ def reset_chat():
 def display_pdf(file):
     # Opening file from file path
 
-    st.markdown("### PDF Preview")
+    st.markdown("### 선행문헌 미리보기")
     base64_pdf = base64.b64encode(file.read()).decode("utf-8")
 
     # Embedding PDF in HTML
@@ -40,9 +40,9 @@ def display_pdf(file):
 
 with st.sidebar:
 
-    st.header(f"Add your documents!")
+    st.header(f"선행문헌을 등록하세요!")
     
-    uploaded_file = st.file_uploader("Choose your `.pdf` file", type="pdf")
+    uploaded_file = st.file_uploader("PDF 파일만 가능 `.pdf` file", type="pdf")
 
     if uploaded_file:
         print(uploaded_file)
@@ -57,7 +57,7 @@ with st.sidebar:
                     f.write(uploaded_file.getvalue())
                 
                 file_key = f"{session_id}-{uploaded_file.name}"
-                st.write("Indexing your document...")
+                st.write("문헌을 인덱싱하고 있습니다...")
 
                 if file_key not in st.session_state.get('file_cache', {}):
 
@@ -67,7 +67,7 @@ with st.sidebar:
                                 file_path
                             )
                     else:    
-                        st.error('Could not find the file you uploaded, please check again...')
+                        st.error('파일을 확인할 수 없습니다. 다시 확인해주세요...')
                         st.stop()
                     
                     pages = loader.load_and_split()
@@ -79,8 +79,8 @@ with st.sidebar:
                     from langchain_upstage import ChatUpstage
                     from langchain_core.messages import HumanMessage, SystemMessage
 
-                    chat = ChatUpstage(upstage_api_key=st.secrets["UPSTAGE_API_KEY"])
-                    # chat = ChatUpstage(upstage_api_key=os.getenv("UPSTAGE_API_KEY"))
+                    # chat = ChatUpstage(upstage_api_key=st.secrets["UPSTAGE_API_KEY"])
+                    chat = ChatUpstage(upstage_api_key=os.getenv("UPSTAGE_API_KEY"))
 
                     # 1) 챗봇에 '기억'을 입히기 위한 첫번째 단계 
 
@@ -89,7 +89,10 @@ with st.sidebar:
                     from langchain.chains import create_history_aware_retriever
                     from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-                    contextualize_q_system_prompt = """이전 대화 내용과 최신 사용자 질문이 있을 때, 이 질문이 이전 대화 내용과 관련이 있을 수 있습니다. 
+                    contextualize_q_system_prompt = """입력된 선행기술 특허 문헌을 기반으로 
+                    사용자의 아이디어와 결합하여 발명설명서(invention discloser)를 생성합니다. 
+                    발명설명서는 전문 특허명세서 형식입니다. 
+                    이전 대화 내용과 최신 사용자 질문이 있을 때, 이 질문이 이전 대화 내용과 관련이 있을 수 있습니다. 
                     이런 경우, 대화 내용을 알 필요 없이 독립적으로 이해할 수 있는 질문으로 바꾸세요. 
                     질문에 답할 필요는 없고, 필요하다면 그저 다시 구성하거나 그대로 두세요."""
 
@@ -112,10 +115,9 @@ with st.sidebar:
                     from langchain.chains import create_retrieval_chain
                     from langchain.chains.combine_documents import create_stuff_documents_chain
 
-                    qa_system_prompt = """질문-답변 업무를 돕는 보조원입니다. 
-                    질문에 답하기 위해 검색된 내용을 사용하세요. 
-                    답을 모르면 모른다고 말하세요. 
-                    답변은 세 문장 이내로 간결하게 유지하세요.
+                    qa_system_prompt = """발명, 특허출원 업무를 돕는 보조원입니다. 
+                    발명설명서 생성 요청에 답하기 위해 검색된 내용을 사용하세요. 
+                    답변은 특허명세서 형태로 답변해야합니다.
 
                     ## 답변 예시
                     📍답변 내용: 
@@ -135,14 +137,14 @@ with st.sidebar:
                     # 결과값은 input, chat_history, context, answer 포함함.
                     rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
 
-                st.success("Ready to Chat!")
+                st.success("대화 준비 완료!")
                 display_pdf(uploaded_file)
         except Exception as e:
             st.error(f"An error occurred: {e}")
             st.stop()     
 
 # 웹사이트 제목
-st.title("Solar LLM Chatbot")
+st.title("HarvestIP")
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
@@ -160,7 +162,7 @@ for message in st.session_state.messages:
 MAX_MESSAGES_BEFORE_DELETION = 4
 
 # 웹사이트에서 유저의 인풋을 받고 위에서 만든 AI 에이전트 실행시켜서 답변 받기
-if prompt := st.chat_input("Ask a question!"):
+if prompt := st.chat_input("발명에 대해서 물어보세요!"):
     
 # 유저가 보낸 질문이면 유저 아이콘과 질문 보여주기
      # 만약 현재 저장된 대화 내용 기록이 4개보다 많으면 자르기
