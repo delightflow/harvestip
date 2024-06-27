@@ -144,7 +144,10 @@ with st.sidebar:
             st.stop()     
 
 # 웹사이트 제목
-st.title("HarvestIP")
+st.title("HarvestIP AI 발명명세서 생성기")
+st.write("HarvestIP는 선행문헌을 기반으로 사용자의 아이디어와 결합하여 발명명세서를 생성합니다.")
+st.write("발명설명서는 전문 특허명세서 형식입니다.")
+st.write("검색증강생성기술을 활용하여 chatGPT보다 더 정확하고 전문적인 발명명세서를 작성합니다.")
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
@@ -162,7 +165,7 @@ for message in st.session_state.messages:
 MAX_MESSAGES_BEFORE_DELETION = 4
 
 # 웹사이트에서 유저의 인풋을 받고 위에서 만든 AI 에이전트 실행시켜서 답변 받기
-if prompt := st.chat_input("Ask me anything!"):
+if prompt := st.chat_input("선행문헌을 등록하고 아이디어를 입력하면 명세서 형식의 발명명세서를 만들어드려요!"):
     
     
 # 유저가 보낸 질문이면 유저 아이콘과 질문 보여주기
