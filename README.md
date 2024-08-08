@@ -1,6 +1,6 @@
-# HarvestIP: RAG-Based Patent Document Writing and Analysis Solution
+# HavIP: RAG-Based Patent Document Writing and Analysis Solution
 
-Welcome to HarvestIP, a cutting-edge solution for patent document creation, Utilizing Retrieval-Augmented Generation (RAG) technology, HarvestIP streamlines the process of drafting professional patent documents, providing inventors and companies with comprehensive tools for managing intellectual property.
+Welcome to HavIP, a cutting-edge solution for patent document creation, Utilizing Retrieval-Augmented Generation (RAG) technology, HavIP streamlines the process of drafting professional patent documents, providing inventors and companies with comprehensive tools for managing intellectual property.
 
 ## Features
 
@@ -15,7 +15,7 @@ Welcome to HarvestIP, a cutting-edge solution for patent document creation, Util
 
 ## Installation
 
-To get started with HarvestIP, follow these steps:
+To get started with HavIP, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
@@ -32,11 +32,11 @@ To get started with HarvestIP, follow these steps:
 ## Usage
 
 1. **Input Invention Idea**: Provide keywords or a description of your invention idea.
-2. **Generate Patent Document**: Use HarvestIP to create a professional patent disclosure.
+2. **Generate Patent Document**: Use HavIP to create a professional patent disclosure.
 
 ## Contribution
 
-We welcome contributions to HarvestIP! To contribute, please follow these steps:
+We welcome contributions to HavIP! To contribute, please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature/YourFeature`).
@@ -46,7 +46,7 @@ We welcome contributions to HarvestIP! To contribute, please follow these steps:
 
 ## License
 
-HarvestIP is released under the MIT License. See `LICENSE` for more information.
+HavIP is released under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
@@ -54,4 +54,4 @@ For any questions or support, please contact us at contact@patentwith.com
 
 ---
 
-Thank you for using HarvestIP! We hope our solution significantly enhances your patent management process.
+Thank you for using HavIP! We hope our solution significantly enhances your patent management process.
