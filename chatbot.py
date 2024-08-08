@@ -9,6 +9,7 @@ import tempfile
 from langchain_upstage import UpstageEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_community.document_loaders import PyPDFLoader
+from openai import OpenAI
 
 if "id" not in st.session_state:
     st.session_state.id = uuid.uuid4()
@@ -144,8 +145,8 @@ with st.sidebar:
             st.stop()     
 
 # 웹사이트 제목
-st.title("HarvestIP AI 발명명세서 생성기")
-st.write("HarvestIP는 선행문헌을 기반으로 사용자의 아이디어와 결합하여 발명명세서를 생성합니다.")
+st.title("HavIP AI 발명명세서 생성기")
+st.write("HavIP은 선행문헌을 기반으로 사용자의 아이디어와 결합하여 발명명세서를 생성합니다.")
 st.write("발명설명서는 전문 특허명세서 형식입니다.")
 st.write("검색증강생성기술을 활용하여 chatGPT보다 더 정확하고 전문적인 발명명세서를 작성합니다.")
 
@@ -170,10 +171,10 @@ if prompt := st.chat_input("선행문헌을 등록하고 아이디어를 입력�
     
 # 유저가 보낸 질문이면 유저 아이콘과 질문 보여주기
      # 만약 현재 저장된 대화 내용 기록이 4개보다 많으면 자르기
-    if len(st.session_state.messages) >= MAX_MESSAGES_BEFORE_DELETION:
-        # Remove the first two messages
-        del st.session_state.messages[0]
-        del st.session_state.messages[0]  
+    # if len(st.session_state.messages) >= MAX_MESSAGES_BEFORE_DELETION:
+    #     # Remove the first two messages
+    #     del st.session_state.messages[0]
+    #     del st.session_state.messages[0]  
    
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
@@ -203,6 +204,32 @@ if prompt := st.chat_input("선행문헌을 등록하고 아이디어를 입력�
             message_placeholder.markdown(full_response)
             
     st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+    new_session_state_messages = []
+
+     # 만약 현재 저장된 대화 내용 기록이 MAX_MESSAGES_BEFORE_DELETION보다 많으면 자르기
+    if len(st.session_state.messages) <= MAX_MESSAGES_BEFORE_DELETION:
+        new_session_state_messages = st.session_state.messages
+    elif len(st.session_state.messages) > MAX_MESSAGES_BEFORE_DELETION:
+        # Keep only the last two messages
+        new_session_state_messages = st.session_state.messages[-MAX_MESSAGES_BEFORE_DELETION:]
+
+    client = OpenAI(
+        api_key=os.getenv("UPSTAGE_API_KEY"),
+        base_url="https://api.upstage.ai/v1/solar"
+    )
+        
+    response = client.chat.completions.create(
+            model="solar-1-mini-groundedness-check",
+            messages=new_session_state_messages
+    )
+
+    print(response.choices[0].message.content)
+    if response.choices[0].message.content == "grounded":
+        st.caption('하빕이 생성한 답변은 검증을 통과했습니다.')
+    else:
+        st.caption('생성한 답변은 검증을 통과하지 못하였습니다. 신빙성에 유의하세요.')
+
 
 print("_______________________")
 print(st.session_state.messages)
